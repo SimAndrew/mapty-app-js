@@ -1,4 +1,5 @@
 # Created by https://www.toptal.com/developers/gitignore/api/webstorm,visualstudiocode
+# Created by https://www.toptal.com/developers/gitignore/api/webstorm,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=webstorm,visualstudiocode
 
 ### VisualStudioCode ###
@@ -8,6 +9,7 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+.vscode*
 
 # Local History for Visual Studio Code
 .history/
@@ -30,6 +32,7 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea*
 
 # AWS User-specific
 .idea/**/aws.xml
