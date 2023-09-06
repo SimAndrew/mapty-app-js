@@ -211,6 +211,19 @@ a:visited {
   font-family: 'Manrope', sans-serif;
   font-size: 1.7rem;
   font-weight: 600;
+  overflow: hidden;
+}
+
+.btn-reset.hidden {
+  display: none;
+}
+
+.close-icon {
+  color: var(--color-light--3);
+  font-size: 2rem;
+  justify-self: self-end;
+  position: relative;
+  grid-column: 4;
 }
 
 @media only screen and (max-width: 1100px) {
@@ -220,7 +233,7 @@ a:visited {
   }
 
   .workouts {
-    height: 29vh;
+    height: 19rem;
   }
 
   .workout {
@@ -240,6 +253,10 @@ a:visited {
   }
 
   .btn-reset {
+    padding: 1.2rem 1rem;
+  }
+
+  .delete-btn {
     padding: 1rem 0.5rem;
   }
 }

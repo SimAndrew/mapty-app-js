@@ -61,12 +61,6 @@ const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 const btnReset = document.querySelector('.btn-reset');
 
-btnReset.addEventListener('click', reset);
-function reset() {
-  localStorage.removeItem('workouts');
-  location.reload();
-}
-
 class App {
   #map;
   #mapZoomLevel = 13;
@@ -80,6 +74,11 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+    containerWorkouts.addEventListener('click', this._deleteWorkout.bind(this));
+    containerWorkouts.addEventListener(
+      'click',
+      this._deleteAllWorkout.bind(this)
+    );
   };
 
   _getPosition() {
@@ -183,6 +182,7 @@ class App {
   _renderWorkout(workout) {
     let html = `
       <li class="workout workout--${workout.type}" data-id="${workout.id}">
+          <i class="fas fa-times-circle close-icon"data-id="${workout.id}" ></i>
           <h2 class="workout__title">${workout.description}</h2>
           <div class="workout__details">
             <span class="workout__icon">${workout.type === 'running' ? '🏃' : '🚴‍♀️'}‍️</span>
@@ -226,6 +226,36 @@ class App {
         </li>
         `;
       form.insertAdjacentHTML('afterend', html);
+
+      btnReset.classList.remove('hidden');
+  };
+
+  _deleteWorkout(e) {
+    const closeEl = e.target.closest('.close-icon');
+    if (!closeEl) return;
+    const workout = this.#workouts.find(work => work.id === closeEl.dataset.id);
+    const workoutEl = e.target.closest('.workout');
+
+    workoutEl.style.display = 'none';
+    this.#workouts.pop(workout);
+    this._setLocalStorage();
+    location.reload();
+  };
+
+  _deleteAllWorkout(e) {
+    const btnReset = e.target.closest('.btn-reset');
+    if (!btnReset) return;
+    containerWorkouts.style.display = 'none';
+    while (this.#workouts.length) {
+      this.#workouts.pop();
+    }
+    this._setLocalStorage();
+    location.reload();
+  };
+
+  reset() {
+    localStorage.removeItem('workouts');
+    location.reload();
   };
 
   _moveToPopup(e) {
@@ -239,7 +269,7 @@ class App {
         duration: 1
       }
     });
-  }
+  };
 
   _setLocalStorage() {
     localStorage.setItem('workouts', JSON.stringify(this.#workouts));
